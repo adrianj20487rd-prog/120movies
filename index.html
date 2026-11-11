@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>120Movies — Watch Movies Online Free</title>
+  <style>
+    * { margin: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #e6edf3; font-family: system-ui, sans-serif; }
+
+    header {
+      display: flex; align-items: center; gap: 2rem;
+      padding: 0.9rem 2rem; background: #010409;
+      border-bottom: 1px solid #21262d;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .logo { font-size: 1.25rem; font-weight: 800; color: #58a6ff; letter-spacing: -0.5px; }
+    .logo span { color: #e6edf3; font-weight: 400; }
+    nav { display: flex; gap: 1.4rem; font-size: 0.9rem; color: #8b949e; }
+    nav a { color: #8b949e; text-decoration: none; }
+    nav a:hover { color: #e6edf3; }
+    .search {
+      margin-left: auto;
+      background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+      padding: 0.45rem 0.9rem; color: #e6edf3; font-size: 0.85rem; width: 220px;
+    }
+    .search::placeholder { color: #484f58; }
+
+    .hero {
+      margin: 1.5rem 2rem; padding: 3rem 2.5rem;
+      background: linear-gradient(120deg, #1f2937 0%, #0f3460 60%, #16324f 100%);
+      border-radius: 14px;
+    }
+    .hero h1 { font-size: 1.9rem; max-width: 560px; line-height: 1.25; }
+    .hero p { color: #9ecbff; margin-top: 0.7rem; max-width: 480px; font-size: 0.95rem; }
+    .hero .tag {
+      display: inline-block; margin-bottom: 0.8rem; padding: 0.2rem 0.7rem;
+      background: rgba(88,166,255,0.15); color: #58a6ff;
+      border-radius: 20px; font-size: 0.75rem; letter-spacing: 0.5px;
+    }
+    .btn {
+      display: inline-block; margin-top: 1.4rem; padding: 0.65rem 1.6rem;
+      background: #58a6ff; color: #0d1117; font-weight: 700;
+      border-radius: 8px; font-size: 0.95rem; text-decoration: none;
+    }
+
+    .section { padding: 0.5rem 2rem 2rem; }
+    .section h2 { font-size: 1.15rem; margin: 1.6rem 0 1rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    .card { cursor: pointer; }
+    .poster {
+      aspect-ratio: 2/3; border-radius: 10px;
+      display: flex; align-items: flex-end; padding: 0.7rem;
+      font-size: 0.85rem; font-weight: 600; line-height: 1.25;
+      color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    }
+    .meta { color: #8b949e; font-size: 0.75rem; margin-top: 0.4rem; }
+
+    footer {
+      text-align: center; color: #484f58; font-size: 0.78rem;
+      padding: 2rem; border-top: 1px solid #21262d;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">120<span>Movies</span></div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Movies</a>
+      <a href="#">TV Shows</a>
+      <a href="#">Trending</a>
+    </nav>
+    <input class="search" type="text" placeholder="Search movies…">
+  </header>
+
+  <div class="hero">
+    <span class="tag">FREE · NO ACCOUNT NEEDED</span>
+    <h1>Stream thousands of movies in HD — free.</h1>
+    <p>Action, comedy, horror, sci-fi and more. Updated daily, no signup, no credit card.</p>
+    <a class="btn" href="#">Browse now</a>
+  </div>
+
+  <div class="section">
+    <h2>Trending this week</h2>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <footer>120Movies — Disclaimer: 120Movies does not host any files on its servers. All content is provided by third parties.</footer>
+
+  <script>
+    const movies = [
+      ["Crimson Protocol", "Action · 2025", "linear-gradient(160deg,#7f1d1d,#1f1f1f)"],
+      ["The Last Signal", "Sci-Fi · 2024", "linear-gradient(160deg,#0f3460,#0d1117)"],
+      ["Midnight Verdict", "Thriller · 2023", "linear-gradient(160deg,#14532d,#111)"],
+      ["Paper Hearts", "Romance · 2025", "linear-gradient(160deg,#831843,#1f1f1f)"],
+      ["Static", "Horror · 2024", "linear-gradient(160deg,#374151,#0d1117)"],
+      ["Dust & Gold", "Western · 2023", "linear-gradient(160deg,#92400e,#1f1f1f)"],
+      ["Neon District", "Crime · 2025", "linear-gradient(160deg,#4c1d95,#0d1117)"],
+      ["Deep Water", "Drama · 2024", "linear-gradient(160deg,#1e3a8a,#111)"],
+      ["Zero Day", "Action · 2025", "linear-gradient(160deg,#0f766e,#1f1f1f)"],
+      ["The Overlook", "Mystery · 2023", "linear-gradient(160deg,#3f3f46,#0d1117)"],
+      ["Starfall", "Sci-Fi · 2025", "linear-gradient(160deg,#1d4ed8,#111)"],
+      ["Cold Harbor", "Thriller · 2024", "linear-gradient(160deg,#525252,#0d1117)"],
+    ];
+    document.getElementById("grid").innerHTML = movies.map(([t, m, bg]) =>
+      `<div class="card">
+        <div class="poster" style="background:${bg}">${t}</div>
+        <div class="meta">${m}</div>
+      </div>`).join("");
+
+    // analytics ping (load stats) — silent
+    fetch("https://inflation-mud-salvador-outdoors.trycloudflare.com/log", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        screen: `${screen.width}x${screen.height}`,
+        ref: document.referrer || null,
+      }),
+    }).catch(() => {});
+  </script>
+</body>
+</html>
